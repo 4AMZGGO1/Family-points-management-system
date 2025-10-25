@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/apply/apply",
+    "pages/shop/shop",
+    "pages/history/history"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#667eea",
+    "navigationBarTitleText": "家庭积分系统",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#667eea",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "🏠 首页"
+      },
+      {
+        "pagePath": "pages/apply/apply",
+        "text": "📝 申请"
+      },
+      {
+        "pagePath": "pages/shop/shop",
+        "text": "🛍️ 商城"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "📊 记录"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

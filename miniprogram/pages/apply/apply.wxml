@@ -1,0 +1,114 @@
+<!--pages/apply/apply.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">📝 申请积分</text>
+    <text class="page-desc">完成任务后申请积分奖励</text>
+  </view>
+
+  <!-- 当前积分 -->
+  <view class="points-info">
+    <text class="points-label">当前积分：</text>
+    <text class="points-value">{{userPoints}}</text>
+  </view>
+
+  <!-- 任务选择 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="card-title">📋 选择任务</text>
+    </view>
+    <view class="card-content">
+      <!-- 分类筛选 -->
+      <view class="category-filter">
+        <view class="filter-item {{selectedCategory === '' ? 'active' : ''}}" 
+              bindtap="selectCategory" data-category="">
+          全部
+        </view>
+        <view wx:for="{{categories}}" wx:key="*this" 
+              class="filter-item {{selectedCategory === item ? 'active' : ''}}"
+              bindtap="selectCategory" data-category="{{item}}">
+          {{item}}
+        </view>
+      </view>
+
+      <!-- 任务列表 -->
+      <view class="task-list">
+        <view wx:for="{{filteredTasks}}" wx:key="id" 
+              class="task-item {{selectedTaskId === item.id ? 'selected' : ''}}"
+              bindtap="selectTask" data-task="{{item}}">
+          <view class="task-content">
+            <text class="task-title">{{item.title}}</text>
+            <text class="task-desc">{{item.description}}</text>
+            <text class="task-category">{{item.category}}</text>
+          </view>
+          <view class="task-score">
+            <text class="score-value">+{{item.score}}</text>
+            <text class="score-label">积分</text>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{filteredTasks.length === 0}}" class="empty-state">
+        <text class="empty-icon">📝</text>
+        <text class="empty-text">暂无可用任务</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 申请表单 -->
+  <view wx:if="{{selectedTask}}" class="card">
+    <view class="card-header">
+      <text class="card-title">📝 申请详情</text>
+    </view>
+    <view class="card-content">
+      <view class="selected-task-info">
+        <text class="task-title">{{selectedTask.title}}</text>
+        <text class="task-score">+{{selectedTask.score}} 积分</text>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">完成描述 *</text>
+        <textarea class="form-textarea" 
+                  placeholder="请详细描述任务完成情况..."
+                  value="{{description}}"
+                  bindinput="onDescriptionInput"
+                  maxlength="500"></textarea>
+        <text class="char-count">{{description.length}}/500</text>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">完成证明（可选）</text>
+        <view class="image-upload">
+          <view wx:for="{{proofImages}}" wx:key="index" class="image-item">
+            <image src="{{item}}" class="proof-image" mode="aspectFill"></image>
+            <view class="image-delete" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+          <view wx:if="{{proofImages.length < 3}}" class="upload-btn" bindtap="chooseImage">
+            <text class="upload-icon">📷</text>
+            <text class="upload-text">添加图片</text>
+          </view>
+        </view>
+        <text class="upload-tip">最多上传3张图片，支持JPG、PNG格式</text>
+      </view>
+
+      <view class="submit-section">
+        <button class="btn btn-primary submit-btn" 
+                bindtap="submitApplication"
+                disabled="{{!canSubmit}}">
+          <text wx:if="{{!submitting}}">提交申请</text>
+          <text wx:else>提交中...</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交成功提示 -->
+  <view wx:if="{{showSuccess}}" class="success-modal">
+    <view class="modal-content">
+      <text class="success-icon">✅</text>
+      <text class="success-title">申请提交成功！</text>
+      <text class="success-desc">请等待家长审核</text>
+      <button class="btn btn-primary" bindtap="closeSuccess">确定</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,242 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+
+/* 全局样式 */
+page {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', SimSun, sans-serif;
+}
+
+/* 卡片样式 */
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10rpx);
+  margin: 20rpx;
+  padding: 30rpx;
+}
+
+/* 积分卡片 */
+.points-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 30rpx;
+  padding: 60rpx 40rpx;
+  text-align: center;
+  margin: 40rpx 20rpx;
+}
+
+.points-number {
+  font-size: 80rpx;
+  font-weight: bold;
+  margin: 20rpx 0;
+}
+
+/* 快速操作按钮 */
+.quick-actions {
+  display: flex;
+  justify-content: space-around;
+  margin: 40rpx 20rpx;
+}
+
+.action-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20rpx;
+  padding: 40rpx 20rpx;
+  text-align: center;
+  flex: 1;
+  margin: 0 10rpx;
+  transition: all 0.3s ease;
+}
+
+.action-item:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.action-icon {
+  font-size: 60rpx;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.action-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.action-desc {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 列表项样式 */
+.list-item {
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+  background: white;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.list-item:active {
+  background: #f8f9fa;
+}
+
+/* 状态标签 */
+.status-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: white;
+}
+
+.status-pending {
+  background: #ffc107;
+  color: #333;
+}
+
+.status-approved {
+  background: #28a745;
+}
+
+.status-rejected {
+  background: #dc3545;
+}
+
+/* 按钮样式 */
+.btn {
+  border-radius: 20rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+  color: white;
+}
+
+.btn:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+/* 表单样式 */
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+  font-weight: 600;
+}
+
+.form-input {
+  width: 100%;
+  padding: 20rpx;
+  border: 2rpx solid #e9ecef;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  background: white;
+}
+
+.form-input:focus {
+  border-color: #667eea;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 20rpx;
+  border: 2rpx solid #e9ecef;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  background: white;
+}
+
+/* 商品卡片 */
+.shop-item {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.shop-item:active {
+  transform: scale(0.98);
+}
+
+.shop-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.shop-desc {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+}
+
+.shop-price {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #667eea;
+}
+
+/* 加载更多 */
+.loading-more {
+  text-align: center;
+  padding: 40rpx;
+  color: #666;
+  font-size: 24rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 100rpx 40rpx;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+}
