@@ -1,0 +1,103 @@
+<!--pages/home/home.wxml-->
+<view class="container">
+  <!-- 欢迎信息 -->
+  <view class="welcome-section">
+    <text class="welcome-text">
+      <text class="welcome-icon">☀️</text> 欢迎回来，{{username}}！
+    </text>
+  </view>
+
+  <!-- 积分卡片 -->
+  <view class="points-card">
+    <text class="points-title">🏆 我的积分</text>
+    <text class="points-number">{{userPoints}}</text>
+    <text class="points-desc">继续努力，获得更多积分吧！</text>
+  </view>
+
+  <!-- 快速操作 -->
+  <view class="quick-actions">
+    <navigator url="/pages/apply/apply" class="action-item">
+      <text class="action-icon">➕</text>
+      <text class="action-title">申请积分</text>
+      <text class="action-desc">完成任务获得积分</text>
+    </navigator>
+    
+    <navigator url="/pages/shop/shop" class="action-item">
+      <text class="action-icon">🛍️</text>
+      <text class="action-title">积分商城</text>
+      <text class="action-desc">兑换心仪物品</text>
+    </navigator>
+    
+    <navigator url="/pages/history/history" class="action-item">
+      <text class="action-icon">📊</text>
+      <text class="action-title">历史记录</text>
+      <text class="action-desc">查看积分变动</text>
+    </navigator>
+  </view>
+
+  <!-- 待审核申请 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="card-title">⏰ 待审核申请</text>
+    </view>
+    <view class="card-content">
+      <view wx:if="{{pendingSubmissions.length === 0}}" class="empty-state">
+        <text class="empty-icon">✅</text>
+        <text class="empty-text">暂无待审核申请</text>
+      </view>
+      <view wx:else>
+        <view wx:for="{{pendingSubmissions}}" wx:key="id" class="list-item">
+          <view class="item-content">
+            <text class="item-title">{{item.title}}</text>
+            <text class="item-meta">{{item.category}} · +{{item.score}}积分</text>
+          </view>
+          <view class="item-status">
+            <text class="status-badge status-pending">{{item.statusText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近积分变动 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="card-title">📈 最近积分变动</text>
+    </view>
+    <view class="card-content">
+      <view wx:if="{{recentTransactions.length === 0}}" class="empty-state">
+        <text class="empty-icon">📉</text>
+        <text class="empty-text">暂无积分变动记录</text>
+      </view>
+      <view wx:else>
+        <view wx:for="{{recentTransactions}}" wx:key="id" class="list-item">
+          <view class="item-content">
+            <text class="item-title">{{item.description}}</text>
+            <text class="item-meta">{{item.timeAgo}}</text>
+          </view>
+          <view class="item-amount">
+            <text class="amount {{item.type === 'earn' ? 'positive' : 'negative'}}">
+              {{item.type === 'earn' ? '+' : '-'}}{{item.amount}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 任务分类快速入口 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="card-title">📋 任务分类</text>
+    </view>
+    <view class="card-content">
+      <view class="category-grid">
+        <view wx:for="{{categories}}" wx:key="*this" class="category-item" 
+              bindtap="goToApply" data-category="{{item}}">
+          <text class="category-icon">🏷️</text>
+          <text class="category-name">{{item}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

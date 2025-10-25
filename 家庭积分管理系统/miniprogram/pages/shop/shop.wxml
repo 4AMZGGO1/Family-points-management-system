@@ -1,0 +1,127 @@
+<!--pages/shop/shop.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">🛍️ 积分商城</text>
+    <text class="page-desc">用积分兑换心仪物品</text>
+  </view>
+
+  <!-- 当前积分 -->
+  <view class="points-info">
+    <text class="points-label">当前积分：</text>
+    <text class="points-value">{{userPoints}}</text>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class="shop-list">
+    <view wx:for="{{shopItems}}" wx:key="id" class="shop-item">
+      <view class="item-image">
+        <image wx:if="{{item.image}}" src="{{item.image}}" class="product-image" mode="aspectFill"></image>
+        <view wx:else class="placeholder-image">
+          <text class="placeholder-icon">📦</text>
+        </view>
+      </view>
+      
+      <view class="item-content">
+        <text class="item-title">{{item.name}}</text>
+        <text class="item-desc">{{item.description}}</text>
+        
+        <view class="item-meta">
+          <text class="item-stock">库存：{{item.stock}}</text>
+          <text class="item-price">{{item.price}} 积分</text>
+        </view>
+        
+        <view class="item-actions">
+          <view class="quantity-selector">
+            <button class="quantity-btn" 
+                    bindtap="decreaseQuantity" 
+                    data-item="{{item}}"
+                    disabled="{{item.quantity <= 1}}">-</button>
+            <text class="quantity-text">{{item.quantity || 1}}</text>
+            <button class="quantity-btn" 
+                    bindtap="increaseQuantity" 
+                    data-item="{{item}}"
+                    disabled="{{item.quantity >= item.stock}}">+</button>
+          </view>
+          
+          <button class="purchase-btn {{item.price > userPoints ? 'disabled' : ''}}"
+                  bindtap="purchaseItem" 
+                  data-item="{{item}}"
+                  disabled="{{item.price > userPoints || item.stock <= 0}}">
+            <text wx:if="{{item.price > userPoints}}">积分不足</text>
+            <text wx:elif="{{item.stock <= 0}}">缺货</text>
+            <text wx:else>立即购买</text>
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{shopItems.length === 0}}" class="empty-state">
+    <text class="empty-icon">🛍️</text>
+    <text class="empty-text">暂无商品</text>
+  </view>
+
+  <!-- 购买确认弹窗 -->
+  <view wx:if="{{showPurchaseModal}}" class="purchase-modal">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">确认购买</text>
+        <text class="modal-close" bindtap="closePurchaseModal">×</text>
+      </view>
+      
+      <view class="modal-body">
+        <view class="purchase-item">
+          <image wx:if="{{selectedItem.image}}" src="{{selectedItem.image}}" class="purchase-image" mode="aspectFill"></image>
+          <view wx:else class="purchase-placeholder">
+            <text class="placeholder-icon">📦</text>
+          </view>
+          
+          <view class="purchase-info">
+            <text class="purchase-name">{{selectedItem.name}}</text>
+            <text class="purchase-desc">{{selectedItem.description}}</text>
+            <text class="purchase-quantity">数量：{{selectedItem.quantity}}</text>
+          </view>
+        </view>
+        
+        <view class="purchase-summary">
+          <view class="summary-row">
+            <text class="summary-label">单价：</text>
+            <text class="summary-value">{{selectedItem.price}} 积分</text>
+          </view>
+          <view class="summary-row">
+            <text class="summary-label">数量：</text>
+            <text class="summary-value">{{selectedItem.quantity}}</text>
+          </view>
+          <view class="summary-row total">
+            <text class="summary-label">总计：</text>
+            <text class="summary-value">{{selectedItem.price * selectedItem.quantity}} 积分</text>
+          </view>
+          <view class="summary-row">
+            <text class="summary-label">余额：</text>
+            <text class="summary-value">{{userPoints}} 积分</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="btn btn-cancel" bindtap="closePurchaseModal">取消</button>
+        <button class="btn btn-confirm" bindtap="confirmPurchase" disabled="{{purchasing}}">
+          <text wx:if="{{!purchasing}}">确认购买</text>
+          <text wx:else>购买中...</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 购买成功提示 -->
+  <view wx:if="{{showSuccess}}" class="success-modal">
+    <view class="modal-content">
+      <text class="success-icon">✅</text>
+      <text class="success-title">购买成功！</text>
+      <text class="success-desc">商品已加入您的账户</text>
+      <button class="btn btn-primary" bindtap="closeSuccess">确定</button>
+    </view>
+  </view>
+</view>
